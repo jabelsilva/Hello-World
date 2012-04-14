@@ -1,0 +1,408 @@
+﻿/*----------------------------------------------------------
+The base color for this template is #5c87b2. If you'd like
+to use a different color start by replacing all instances of
+#5c87b2 with your new color.
+----------------------------------------------------------*/
+body
+{
+    background-color: #e8eef4;
+    font-size: .85em;
+    font-family: "Trebuchet MS" , Verdana, Helvetica, Sans-Serif;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    color: #000000;
+}
+
+a:link
+{
+    color: #034af3;
+    text-decoration: underline;
+}
+
+a:visited
+{
+    color: #505abc;
+}
+
+a:hover
+{
+    color: #1d60ff;
+    text-decoration: none;
+}
+
+a:active
+{
+    color: #12eb87;
+}
+
+p, ul
+{
+    margin-bottom: 20px;
+    line-height: 1.6em;
+}
+
+header
+{
+    background-color: #000066;
+}
+footer, nav, section
+{
+    display: block;
+}
+
+
+.list li
+{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* HEADINGS   
+----------------------------------------------------------*/
+h1, h2, h3, h4, h5, h6
+{
+    font-size: 1.2em;
+    color: #000000;
+    max-width:500px;
+}
+
+h1
+{
+    display: block;
+    font-size: 2em;
+    padding: 2px 0 2px 0;
+    width: 200px;
+}
+
+h2
+{
+    -webkit-border-radius: 5px 5px 5px 5px;
+    background-color: #e8eef4;
+    padding: 5px 5px 3px 5px;
+    margin-bottom: 10px;
+}
+
+h3
+{
+    font-size: 1.2em;
+}
+
+h4
+{
+    font-size: 1.1em;
+}
+
+h5, h6
+{
+    font-size: 1em;
+}
+
+/* PRIMARY LAYOUT ELEMENTS   
+----------------------------------------------------------*/
+
+/* you can specify a greater or lesser percentage for the 
+page width. Or, you can specify an exact pixel width. */
+.page
+{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+header, #header
+{
+    position: relative;
+    margin-bottom: 0px;
+    color: #000;
+    padding: 0;
+}
+
+header h1, #header h1
+{
+    font-weight: bold;
+    padding: 0 0 0 0;
+    margin: 0;
+    color: #fff;
+    border: none;
+    line-height: 2em;
+    font-size: 20px !important;
+    text-shadow: 1px 1px 2px #111;
+}
+
+#main
+{
+    width: 1024px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:4px;
+    padding: 30px 15px 30px;
+    background-color: #fff;
+    border-radius: 4px 4px 4px 4px;    
+    -moz-border-radius: 4px 4px 4px 4px;   
+    box-shadow: 1px 1px 1px 1px #888888;        
+    border: 1px solid #000066;
+}
+
+
+footer, #footer
+{
+    background-color: #fff;
+    color: #999;
+    padding: 10px 0;
+    text-align: center;
+    line-height: normal;
+    margin: 0 0 30px 0;
+    font-size: .9em;
+    border-radius: 0 0 4px 4px;
+    -webkit-border-radius: 0 0 4px 4px;
+    -moz-border-radius: 0 0 4px 4px;
+}
+
+/* TAB MENU   
+----------------------------------------------------------*/
+.menu
+{   
+    width: 200px;
+    margin-left:70px;    
+    text-align: right;
+    background:#fff;
+    float:left;
+    padding:10px;
+    border-radius: 4px 4px 4px 4px;    
+    -moz-border-radius: 4px 4px 4px 4px;   
+    box-shadow: 1px 1px 1px 1px #888888;  
+    border: 1px solid #000066;
+          
+}
+
+/* FORM LAYOUT ELEMENTS   
+----------------------------------------------------------*/
+
+fieldset
+{
+    border: 1px solid #ddd;
+    padding: 0 1.4em 1.4em 1.4em;
+    margin: 0 0 1.5em 0;
+}
+
+legend
+{
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+textarea
+{
+    min-height: 75px;
+}
+
+input[type="text"], input[type="password"]
+{
+    border: 1px solid #ccc;
+    padding: 2px;
+    font-size: 1.2em;
+    color: #444;
+    width: 200px;
+}
+div#big
+{
+    
+    z-index:900;    
+    display:none;
+    position:absolute;
+    top:42px;
+    left:330px;
+    border: 3px solid #e8eef4;
+    box-shadow: 10px 10px 5px #888888;    
+}
+div#Cty
+{
+    top:42px;
+    left:420px;
+}
+
+div#Dis
+{
+    top:42px;
+    left:330px;
+}
+div#Dis, div#Cty
+{
+    z-index:900;    
+    display:none;
+    position:absolute;
+    
+    background-color: White;
+    border: 3px solid #e8eef4;
+    box-shadow: 10px 10px 5px #888888;    
+}
+div#Dis table td:hover, div#Cty table td:hover, .selected
+{   
+    background-color: #e8eef4;    
+    width:120px
+}
+
+div#Dis table td, div#Cty table td
+{   
+    width:120px;
+}
+
+select
+{
+    border: 1px solid #ccc;
+    padding: 2px;
+    font-size: 1.2em;
+    color: #444;
+}
+
+
+td#search
+{
+    padding-left:30px;    
+}
+
+/*
+----------------------------------------------------------*/
+
+table.content
+{
+    border: solid 1px #e8eef4;
+    border-collapse: collapse;
+}
+
+table.content td
+{
+    padding: 5px;
+    border: solid 1px #e8eef4;
+}
+
+table.content th
+{
+    padding: 6px 5px;
+    text-align: left;
+    background-color: #e8eef4;
+    border: solid 1px #e8eef4;
+}
+
+/* MISC  
+----------------------------------------------------------*/
+.clear
+{
+    clear: both;
+}
+
+.error
+{
+    color: Red;
+}
+
+nav, #menucontainer
+{
+    margin-top: 40px;
+}
+
+div#title
+{
+    display: block;
+    text-align: left;
+    padding-left: 130px;
+    height: 20px;
+}
+
+#logindisplay
+{
+    font-size: 1.1em;
+    display: block;
+    text-align: right;
+    color: white;
+    padding-right: 130px;
+}
+
+
+div#district, div#county
+{
+    background: #e8eef4;
+    color: 000;
+    position: relative;
+    padding: 2px 5px 2px 5px; 
+}
+
+#logindisplay a:link
+{
+    color: white;
+    text-decoration: underline;
+    background: 
+}
+
+#logindisplay a:visited
+{
+    color: white;
+    text-decoration: underline;
+}
+
+#logindisplay a:hover
+{
+    color: white;
+    text-decoration: none;
+}
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error
+{
+    color: #ff0000;
+}
+
+.field-validation-valid
+{
+    display: none;
+}
+
+.input-validation-error
+{
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors
+{
+    font-weight: bold;
+    color: #ff0000;
+    background-color:#FEE;
+    padding: 5px 5px 5px 5px;
+    border: 1px solid red;
+}
+
+.validation-summary-valid
+{
+    display: none;
+}
+
+/* Styles for editor and display helpers
+----------------------------------------------------------*/
+.display-label, .editor-label
+{
+    margin: 1em 0 0 0;
+}
+
+.display-field, .editor-field
+{
+    margin: 0.5em 0 0 0;
+}
+
+.text-box
+{
+    width: 30em;
+}
+
+.text-box.multi-line
+{
+    height: 6.5em;
+}
+
+.tri-state
+{
+    width: 6em;
+}

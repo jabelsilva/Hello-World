@@ -1,0 +1,255 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <title>
+        <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
+    </title>
+    <link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="../../Content/grid-1264.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href='../../Content/base/jquery.ui.all.css' type="text/css" />
+    <script src="<%: Url.Content("~/Scripts/jquery-1.7.1.min.js") %>" type="text/javascript"></script>
+    <script src="<%: Url.Content("~/Scripts/modernizr-1.7.min.js") %>" type="text/javascript"></script>
+    <script type="text/javascript" src='<%= Url.Content("~/Scripts/ui/jquery-ui-1.8.16.custom.js")%>'></script>
+</head>
+<body>
+    <div class="page">
+        <header>
+        <form>
+           
+                <div id="title">
+                <% var search = ((Cosmetology.Web.Controllers.Search)ViewData["Search"]) ?? new Cosmetology.Web.Controllers.Search(); %>
+                <table id="Search">
+                    <tr>
+                        <td>
+                            <h1>Cosmetology Beta</h1>
+                        </td>
+                        <td>
+                            <input id="District" type="button" class="ui-button ui-widget ui-state-default ui-corner-all" value="<%: string.IsNullOrEmpty(search.District_name) ? "Distrito" : search.District_name %>" />
+                            <%: Html.Hidden("s.District", search.District.HasValue ? search.District.Value.ToString() : "")%>                            
+                        </td>
+                        <td>
+                            <input id="County" type="button" class="ui-button ui-widget ui-state-default ui-corner-all" value="<%: string.IsNullOrEmpty(search.County_name) ? "Concelho" : search.County_name %>" />
+                            <%: Html.Hidden("s.County", search.County.HasValue ? search.County.Value.ToString() : "")%>
+
+                        </td>
+                        <td id="search">
+                            <%: Html.TextBox("s.LookingFor", string.IsNullOrEmpty(search.LookingFor) ? "" : search.LookingFor)%>                            
+                            <input type="submit" value="Ok" class="ui-button ui-widget ui-state-default ui-corner-all" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+          </form>
+
+            <div id="logindisplay">
+                <% Html.RenderPartial("LogOnUserControl"); %>
+            </div>
+            <% Html.RenderPartial("District", Cosmetology.Web.Models.Main.DistrictList()); %>
+            <% Html.RenderPartial("County", Cosmetology.Web.Models.Main.CountyList(search.District)); %>           
+        </header>
+        <section> 
+        <%
+            if (Request.IsAuthenticated)
+            {
+        %>           
+           <div class="menu">
+             <h2>
+                Menu
+            </h2>
+            <%: Html.ActionLink("Perfil", "Index", "Profile", null, null)%>
+            <br />
+            <%: Html.ActionLink("Fotos", "Index", "Photo", null, null)%>
+            <br />
+             <%
+                //var ctx = new Cosmetology.Web.Models.Default();
+                //var isAdmin = ctx.aspnet_UsersInRoles_IsUserInRole("/", Page.User.Identity.Name, "Administrator");
+           if (HttpContext.Current.User.IsInRole("Administrator"))
+           {
+        %> 
+
+            <h2>
+                Administrador
+            </h2>
+            <%: Html.ActionLink("Tipo Serviços", "Index", "ServiceType", null, null)%>
+            <br />
+            <%: Html.ActionLink("Serviços", "Index", "Service", null, null)%>
+            <br />
+             <%: Html.ActionLink("Utilizadores", "Index", "User", null, null)%>
+             <br />
+             <%: Html.ActionLink("Distritos", "Index", "District", null, null)%>
+             <br />
+            <%: Html.ActionLink("Concelhos", "Index", "County", null, null)%>
+             <%
+            }
+        %>
+           </div>
+        <%
+            }
+        %>
+           <div id="main">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />          
+           </div>
+        </section>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+
+    $(function () {
+
+        var dis = $('#Dis td').find('input[name=Id][value=' + $('input#s_District').val() + ']');
+        if (dis.length == 1) {
+            dis.parents('td').addClass('selected');
+        }
+
+        var cty = $('#Cty td').find('input[name=Id][value=' + $('input#s_County').val() + ']');
+        if (cty.length == 1) {
+            cty.parents('td').addClass('selected');
+        }
+
+        $('input#District').live('click', function () {
+            $('#Dis').show(200);
+        });
+
+        $('input#County').live('click', function () {
+            $('#Cty').show(200);
+        });
+
+        $('#Dis').mouseleave(function () {
+            $('#Dis').hide(100);
+        });
+
+        Autocomplete();
+        //        $("#s_LookingFor").autocomplete({
+        //            source: '<%: Url.Action("AutoComplete") %>'
+        //        });
+
+        $('#Dis td').live('click', function () {
+
+            var name = $(this).children('label#name').text();
+            var id = $(this).children('input#Id').val();
+
+            if (id == $('input#s_District').val()) {
+                $('#Dis').hide();
+                return false;
+            }
+
+            var item = $('#Dis td').find('input[name=Id][value=' + $('input#s_District').val() + ']');
+            if (item.length == 1) {
+                item.parents('td').removeClass('selected');
+            }
+
+            $('input#s_County').val('');
+            $('input#County').val('Concelho');
+
+            $('input#District').val(name);
+            $('input#s_District').val(id);
+            //$('input[name=s_District]').val(id);
+
+            $(this).addClass('selected');
+
+            $.ajax({
+                type: 'post',
+                url: '<%: Url.Action("County") %>',
+                data: serilize($('#Search')),
+                dataType: 'html',
+                success: function (request) {
+                    $('div#Cty').replaceWith(request);
+                    CountyEvents();
+                }
+            });
+            $('#Dis').hide();
+        });
+
+        CountyEvents();
+    });
+
+    function CountyEvents() {
+        $('#Cty').mouseleave(function () {
+            $('#Cty').hide(100);
+        });
+
+        $('#Cty td').live('click', function () {
+            var name = $(this).children('label#name').text();
+            var id = $(this).children('input#Id').val();
+
+            if (id == $('input#s_County').val()) {
+                $('#Cty').hide();
+                return false;
+            }
+
+            var item = $('#Cty td').find('input[name=Id][value=' + $('input#s_County').val() + ']');
+            if (item.length == 1) {
+                item.parents('td').removeClass('selected');
+            }
+            $('input#County').val(name);
+            $('input#s_County').val(id);
+            $.ajax({
+                type: 'post',
+                url: '<%: Url.Action("Cookie") %>',
+                data: serilize($('#Search'))
+            });
+
+            $(this).addClass('selected');
+            $('#Cty').hide();
+        });
+    }
+
+    function serilize($element) {
+
+        var obj = new Object();
+        $element.find('input,select,textarea').each(function () {
+
+            var $type = $(this).attr("type");
+            var $name = $(this).attr('name');
+
+            if ($type == "checkbox") {
+                obj[$name] = $(this).is(':checked');
+            }
+            else {
+                obj[$name] = $(this).val();
+            }
+        });
+
+        return obj;
+    }
+
+    function Autocomplete() {
+        $("#s_LookingFor").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '<%: Url.Action("AutoComplete") %>',
+                    dataType: "json",
+                    data: {
+                        q: $("#s_LookingFor").val()
+                    },
+                    success: function (data) {
+                        var d = data;
+                        //                        response($.map(data.geonames, function (item) {
+                        //                            return {
+                        //                                label: item.name + (item.adminName1 ? ", " + item.adminName1 : "") + ", " + item.countryName,
+                        //                                value: item.name
+                        //                            }
+                        //                        }));
+                    }
+                });
+            },
+            minLength: 1,
+            select: function (event, ui) {
+                log(ui.item ?
+					"Selected: " + ui.item.label :
+					"Nothing selected, input was " + this.value);
+            },
+            open: function () {
+                $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
+            },
+            close: function () {
+                $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+            }
+        });
+
+    }
+
+</script>
